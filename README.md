@@ -5,7 +5,11 @@
 > 3.1 MyArrayList 메서드 분류하기
 <pre>
 <code>
-    example code.
+    public E get(int index){
+        if( index < 0 || index >= size ){
+            throw new IndexOutOfBoundsException();
+        }
+    }
 </code>
 </pre>
 2. CHAPTER 4 LinkedList 클래스
