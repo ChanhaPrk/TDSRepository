@@ -15,7 +15,18 @@
     }
 </code>
 </pre>
-   asfjlaskdfjlkasjflkas    
-   alksfjlaksdjflksjdflkajslfk    
+   get메서드에 있는 모든 것은 상수 시간이빈다. 따라서 get 메서드는 상수 시간입니다.    
+<pre>
+<code>
+    public E set(int index, E element ){
+        E old = get( index );
+        array[index] = element;
+        return old;
+    }
+</code>   
+</pre>
+   set메서드는 인덱스가 유효하지 않으면 예외를 던지는 get메서드를 호출합니다.   
+   get메서드 호출을 포함한 set메서드의 모든 것은 상수 시간입니다. 따라서 set 메서드도 상수 시간입니다.
+   //왜 set메서드는 get메서드에 의존하는가?, 중복코드 사용을 방지하기 위함인가?
 2. CHAPTER 4 LinkedList 클래스
 3. CHAPTER 5 이중 연결 리스트
