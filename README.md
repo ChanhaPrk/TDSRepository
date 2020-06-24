@@ -7,10 +7,15 @@
 <code>
     public E get(int index){
         if( index < 0 || index >= size ){
+            //throw는 강제로 예외를 발생시킵니다.
+            //bounds : 범위 
             throw new IndexOutOfBoundsException();
         }
+        return array[ index ]
     }
 </code>
 </pre>
+   asfjlaskdfjlkasjflkas
+   alksfjlaksdjflksjdflkajslfk
 2. CHAPTER 4 LinkedList 클래스
 3. CHAPTER 5 이중 연결 리스트
