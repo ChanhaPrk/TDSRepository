@@ -167,7 +167,96 @@
    올바른 일을 한다는 점에서는 정확한 프로그램이지만, 증가 차수는 기대한 만큼 나오지 않습니다. 자바와 같은 언어는    
    가바지 컬렉션처럼 뒷단에서 많은 일을 하기 때문에 이런 종류의 버그를 찾아내기가 어렵습니다.    
 2. CHAPTER 4 LinkedList 클래스   
+> 4.1 MyLinkedList 메서드 분류하기    
+<pre>
+<code>
+    public int indexOf( Object target ){
+        Node node = head;
+        for( int i = 0; i < size; i++ ){
+            if( equals(target, node.data) ){
+                return i;
+            }
+            node = node.next;
+        }
+        return -1;
+    }
+</code>
+</pre>
+   반복문 변수인 i는 0에서 size-1까지 반복합니다.    
+   각 반복에서 equals메서드를 호출하여 목적 값을 찾았는지 확인합니다.    
+    
+   해당 메소드의 증가 차수는 무엇일까요?    
+   1. 반복마다 상수 시간인 equals 메서드를 호출합니다. 반복문의 다른 연산 또는 상수 시간입니다.    
+   2. 반복문 n번 실행됩니다. 운이 없으면 전체 리스트를 순회할 수도 있기 대문입니다.    
+    
+<pre>
+<code>
+    public void add( int index, E element ){
+        if( index == 0 ){
+            head = new Node( element, head );
+        }else{
+            //index에서 -1를 해야만이 실제 위치에 도달 할 수 있습니다.
+            Node node = getNode( index -1 );
+            node.next = new Node( element, node.next );
+        }
+    }
+</code>
+</pre>
+   index가 0이라면 새로운 Node객체를 시작에 추가합니다. 이것은 특별한 경우로 처리합니다.    
+   그렇지 않으면 리스트를 순회하여 index-1 위치에 있는 요소를 가져옵니다.    
+    
+   (이때 getNode라는 헬퍼 메서드를 사용합니다.)
+<pre>
+<code>
+    private Node getNode( int index ){
+        if( index < 0 || index >= size ){
+            throw new IndexOutOfBoundsException();
+        }
+        Node node = head;
+        for( int i = 0; i < index; i++ ){
+            node = node.next;
+        }
+        return node;
+    }
+</code>
+</pre>
+   그렇다면 add 메서드의 증가 차수는 무엇인가요?    
+   1. getNode메서드가 indexOf메서드와 유사하므로 같은 이유로 선형입니다.    
+   2. add메서드에서 getNode 메서드 전과 후 모두가 상수 시간입니다.    
+   //존재하는 element갯수가 곧 실행시간이 되므로...    
+   (?)따라서 add 메서드는 선형입니다    
+<pre>
+<code>
+    public E remove( int index ){
+        E element = get( index );
+        if( index == 0 ){
+            head = head.next;
+        }else{
+            Node node = getNode( index-1 );
+            node.next = node.next.next;
+        }
+        size--;
+        return element;
+    }
+</code>
+</pre>
+   index 변수가 0이면 다시 특별한 경우로 처리합니다.    
+   그 외에는 index-1 위치에 있는 노드를 찾아 node.next 객체는 건너뛰고 node.next.next 객체로 직접 연결하도록 코드를 수정합니다.    
+   그렇다면, remove 메서드의 증가 차수는 무엇일까요?    
+   remove메서드의 모든 것은 선형인 get과 getNode메서드를 제외하면 상수 시간입니다. 따라서 remove메서드는 선형입니다.    
+    
+   이렇게 두 개의 선형 메서드를 보면 때때로 결과를 이차로 생각하지만 이것은 어떤 연선이    
+   다른 연산 내부에 중첩되었을 때만 해당합니다.    
+   어떤 연산에 이어 다른 연산을 호출하면 실행시간은 더해집니다. 이 연산이 둘 다 O(n)이라면 합 또한 O(n)이 됩니다.    
+>4.2 MyArrayList와 MyLinkedList 비교하기    
+>4.3 프로파일    
+>4.4 결과 해성하기   
+>4.5 실습하기
 3. CHAPTER 5 이중 연결 리스트    
+> 5.1 성능 프로파일 결과    
+> 5.2 LinkedList 메서드 프로파일하기    
+> 5.3 LinkedList 끝에 더하기    
+> <del>5.4 이중 연결 리스트</del>    
 > 5.5 자료구조 선택하기    
 
    ArrayList클래스의 유일한 이점은 get과 set 메서드 입니다.    
@@ -179,9 +268,9 @@
    공간에 대해서 잊지마세요.    
    지금까지 실행시간에 초점을 맞추었지만, 다른 구현은 다른 양의 공간이 필요합니다.    
    ArrayList에서 요소들은 한 덩어리의 메모리 안에 나란히 저장되어 거의 낭비되는 공간이 없고,    
-   컴퓨터 하드웨어도 연속된 덩어리에서 종종 속도가 더 쁘랍니다. 연결리스트에서 각 요소는 하나 또는 두 개의 참조가 있는    
+   컴퓨터 하드웨어도 연속된 덩어리에서 종종 속도가 더 쁘랍니다. 연결리스트에서 각 요소는 하나 또는 두 개의 참조가 있는
    노드가 필요합니다. 참조는 공간을 차지합니다. 메모리 여기저기에 노드가 흩어져 있으면 하드웨어의 효율이 떨어질 수 있습니다.    
-   알고리즘 분석은 자료구조를 선택하는 지침을 제공하지만, 오직 다음 조건일 때만 유효합니다.
-      1. 응용 프로그램의 실행시간이 중요하다.    
-      2. 응용 프로그램의 실행시간이 선택한 자료구조에 의존합니다.    
-      3. 증가 차수에 따라 어느 자료구조가 나은지 실제로 예측할 수 있을 만큼 문제 크기가 충분히 크다.
+   알고리즘 분석은 자료구조를 선택하는 지침을 제공하지만, 오직 다음 조건일 때만 유효합니다.    
+   1. 응용 프로그램의 실행시간이 중요하다.    
+   2. 응용 프로그램의 실행시간이 선택한 자료구조에 의존합니다.    
+   3. 증가 차수에 따라 어느 자료구조가 나은지 실제로 예측할 수 있을 만큼 문제 크기가 충분히 크다.
