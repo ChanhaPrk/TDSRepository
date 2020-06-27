@@ -42,7 +42,7 @@
 </pre>
 <pre>
 <code>
-    private boolean equlas( Object target, Object element ){
+    private boolean equals( Object target, Object element ){
         if( target == null ){
             return element == null;
         }else{
@@ -54,7 +54,27 @@
    배열의 크기에는 의존하지 않으므로 indexOf메서드를 분석하기 위해 equals메서드를 상수 시간으로 생각합니다.   
    (?)하필 배열의 index(크기)에 의존하지 않는가?   
    (?)결함도를 낮게 하기위해서인가 아니면 상수시간으로 생각하기 위해서인가?   
-   평균적으로 요소 개수의 절반을 테스트하기를 기대합니다. 따라서 indexOf 메서드는 선형이빈다.   
+   평균적으로 요소 개수의 절반을 테스트하기를 기대합니다. 따라서 indexOf 메서드는 선형입니다.   
    (대상 요소가 배열의 시작에 있는 거의 일어나지 않을 경우는 제외)   
+<pre>
+<code>
+    public E remove( int index ){
+        E element = get(index);
+        //size-1을 하는 이유는 
+        //index는 배열의 마지막 1전까지 접근하여 
+        //그 기준으로 +1을 참조하기때문에 
+        //i < size을 for의 범위로 초기화 할 경우 array의 범위를 넘어서게 된다.
+        for( int i = index; i < size-1; i++ ){
+            array[i] = array[i+1];
+        }
+    }
+</code>
+</pre>
+   상수 시간인 get 메서드를 사용하고 index부터 배열에 반복문을 실행합니다.    
+   리스트의 마지막 요소를 제거하면 반복문은 실행되지 않고, 이 메서드는 상수 시간이 됩니다.    
+   첫 번째 요소를 제거하면 나머지 모든 요소에 접근하여 선형이 됩니다. 따라서    
+   remove메서드는 선형으로 간주합니다.    
+> afasdfasdf    
+   
 2. CHAPTER 4 LinkedList 클래스   
 3. CHAPTER 5 이중 연결 리스트
