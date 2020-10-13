@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/ChanhaPrk/movie_app_2019/static/js/main.0296b26d.chunk.js",
+    "main.js.map": "/ChanhaPrk/movie_app_2019/static/js/main.0296b26d.chunk.js.map",
+    "runtime-main.js": "/ChanhaPrk/movie_app_2019/static/js/runtime-main.102aa0be.js",
+    "runtime-main.js.map": "/ChanhaPrk/movie_app_2019/static/js/runtime-main.102aa0be.js.map",
+    "static/js/2.769761e1.chunk.js": "/ChanhaPrk/movie_app_2019/static/js/2.769761e1.chunk.js",
+    "static/js/2.769761e1.chunk.js.map": "/ChanhaPrk/movie_app_2019/static/js/2.769761e1.chunk.js.map",
+    "index.html": "/ChanhaPrk/movie_app_2019/index.html",
+    "precache-manifest.a9e64ac34547e66ff1ec4999c90e76b0.js": "/ChanhaPrk/movie_app_2019/precache-manifest.a9e64ac34547e66ff1ec4999c90e76b0.js",
+    "service-worker.js": "/ChanhaPrk/movie_app_2019/service-worker.js",
+    "static/js/2.769761e1.chunk.js.LICENSE.txt": "/ChanhaPrk/movie_app_2019/static/js/2.769761e1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.102aa0be.js",
+    "static/js/2.769761e1.chunk.js",
+    "static/js/main.0296b26d.chunk.js"
+  ]
+}
